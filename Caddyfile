@@ -1,24 +1,21 @@
 {
-    order cache before rewrite
-    cache {
-        redis {
-            url 127.0.0.1:6379
-        }
-    }
+	order cache before rewrite
+	cache {
+		ttl 10s # default ttl, can be overridden per route
+		redis {
+			url 127.0.0.1:{$REDIS_PORT}
+		}
+	}
 }
 
-http://localhost:3000 {
-    reverse_proxy localhost:8080
+http://localhost:{$CADDY_PORT} {
+	reverse_proxy localhost:{$UPSTREAM_PORT}
 
-    route /.git/* {
-        cache {
-            ttl 10s
-        }
-    }
+	route /healthcheck {
+		# no cache
+	}
 
-    route /* {
-        cache {
-            ttl 30s
-        }
-    }
+	route / {
+		cache
+	}
 }

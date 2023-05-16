@@ -4,11 +4,17 @@ An experiment in using caddy with some plugins and redis to replace our frontend
 
 ## Setup
 
-If you have `nix` and `direnv` setup everything will be installed automattically. If you don't, you need to manually install `go`, `xcaddy`, and `redis`.
+If you have `nix` and `direnv` setup everything will be installed automatically. If you don't, you need to manually install `go`, `xcaddy`, and `redis`.
 
-## Testing configurations
+Run `./build.sh` to build a caddy image with the caching plugin. If you change anything in `./build.sh` you need to re-run it, but changing caddy config doesn't require this.
 
-There's not automated tests setup yet, just opening a bunch of terminals and running stuff.
+## Running test
+
+There are basic tests in `tests/basic.spec.ts` that gives an out of starting processes so tests can be run against a caddy configuration to verify caching behaviour. You need to setup you environment as described above for them to run.
+
+## Manually running services
+
+If you want to run these services manually outside the tests you can commend out the `afterAll` block in the jest tests and they'll stay running until you kill the test process. Or you can fire stuff up manually like below, this is more work but outputs much clearer logs.
 
 ```bash
 # start redis (this will persist data to ./dump.rdb)

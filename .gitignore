@@ -1,3 +1,4 @@
 .direnv
 out/*
 dump.rdb
+node_modules
